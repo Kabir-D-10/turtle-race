@@ -1,0 +1,55 @@
+import random
+import turtle
+
+y_pos = -100
+
+screen = turtle.Screen()
+screen.bgcolor("white")
+
+user = turtle.Turtle()
+user.shape("turtle")
+user.color("red")
+user.penup()
+user.goto(-200,100)
+
+def r():
+  user.forward(10)
+  
+screen.listen()
+screen.onkey(r, "Right")
+
+colours = ["blue", "green", "orange", "purple"]
+players = []
+
+for colour in colours:
+  player = turtle.Turtle()
+  player.shape("turtle")
+  player.color(colour)
+  player.penup()
+  player.goto(-200, y_pos)
+  players.append(player)
+  y_pos += 50
+
+def move_player():
+  for player in players:
+    distance = random.randint(1,10)
+    player.forward(distance)
+    
+winner = ""
+game_over = False
+while not game_over:
+  move_player()
+  for player in players:
+    if player.xcor() >= 200:
+      game_over = True
+      if user.xcor() > player.xcor():
+        winner = "red"
+      else:
+        winner = player.color()[0]
+      break
+if winner:
+  turtle.write(f"The {winner.upper()} turtle wins!", 
+               align="center",
+               font=("Arial", 16, "bold"))
+  turtle.hideturtle()
+  
